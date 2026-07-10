@@ -1,25 +1,26 @@
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
+import { HTTP_STATUS } from "../constants/httpStatus.js";
+import { MESSAGES } from "../constants/messages.js";
 
-// Register User
 const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
         if (!name || !email || !password) {
-            return res.status(400).json({
+            return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 success: false,
-                message: "All fields are required",
+                message: MESSAGES.AUTH.FIELDS_REQUIRED,
             });
         }
 
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            return res.status(409).json({
+            return res.status(HTTP_STATUS.CONFLICT).json({
                 success: false,
-                message: "User already exists",
+                message: MESSAGES.AUTH.USER_EXISTS,
             });
         }
 
@@ -31,9 +32,9 @@ const registerUser = async (req, res) => {
             password: hashedPassword,
         });
 
-        res.status(201).json({
+        res.status(HTTP_STATUS.CREATED).json({
             success: true,
-            message: "User registered successfully",
+            message: MESSAGES.AUTH.REGISTERED,
             data: {
                 id: user._id,
                 name: user.name,
@@ -43,46 +44,45 @@ const registerUser = async (req, res) => {
             },
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             success: false,
             message: error.message,
         });
     }
 };
 
-// Login User
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
 
         if (!email || !password) {
-            return res.status(400).json({
+            return res.status(HTTP_STATUS.BAD_REQUEST).json({
                 success: false,
-                message: "Email and password are required",
+                message: MESSAGES.AUTH.EMAIL_PASSWORD_REQUIRED,
             });
         }
 
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(401).json({
+            return res.status(HTTP_STATUS.UNAUTHORIZED).json({
                 success: false,
-                message: "Invalid email or password",
+                message: MESSAGES.AUTH.INVALID_CREDENTIALS,
             });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
-            return res.status(401).json({
+            return res.status(HTTP_STATUS.UNAUTHORIZED).json({
                 success: false,
-                message: "Invalid email or password",
+                message: MESSAGES.AUTH.INVALID_CREDENTIALS,
             });
         }
 
-        res.status(200).json({
+        res.status(HTTP_STATUS.OK).json({
             success: true,
-            message: "Login successful",
+            message: MESSAGES.AUTH.LOGGED_IN,
             data: {
                 id: user._id,
                 name: user.name,
@@ -92,7 +92,7 @@ const loginUser = async (req, res) => {
             },
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             success: false,
             message: error.message,
         });
