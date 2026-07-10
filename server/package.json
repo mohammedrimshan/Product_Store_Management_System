@@ -1,0 +1,36 @@
+{
+  "name": "product-store-management-system-server",
+  "version": "1.0.0",
+  "description": "Backend API for Multi-Store Stock Management System",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "jest --runInBand --detectOpenHandles",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "mongoose",
+    "jwt",
+    "stock-management"
+  ],
+  "author": "Mohammed Rimshan",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.7.4"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.2.2"
+  }
+}
