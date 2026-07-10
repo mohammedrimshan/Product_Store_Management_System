@@ -1,21 +1,23 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const storeSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
 
-    location: {
-      type: String,
-      trim: true,
+        location: {
+            type: String,
+            trim: true,
+        },
     },
-  },
-  {
-    timestamps: true,
-  }
+    {
+        timestamps: true,
+    }
 );
 
-module.exports = mongoose.model("Store", storeSchema);
+const Store = mongoose.model("Store", storeSchema);
+
+export default Store;

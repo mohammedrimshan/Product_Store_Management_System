@@ -2,6 +2,7 @@
   "name": "product-store-management-system-server",
   "version": "1.0.0",
   "description": "Backend API for Multi-Store Stock Management System",
+  "type": "module",
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",
