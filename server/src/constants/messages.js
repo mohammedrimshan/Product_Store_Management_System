@@ -13,4 +13,37 @@ export const MESSAGES = {
     ROLE: {
         FORBIDDEN: "Access denied. Insufficient permissions.",
     },
+    PRODUCT: {
+        FIELDS_REQUIRED: "Name and SKU are required",
+        SKU_EXISTS: "A product with this SKU already exists",
+        NOT_FOUND: "Product not found",
+        CREATED: "Product created successfully",
+        FETCHED: "Products fetched successfully",
+    },
+    STORE: {
+        NAME_REQUIRED: "Store name is required",
+        NOT_FOUND: "Store not found",
+        CREATED: "Store created successfully",
+        FETCHED: "Stores fetched successfully",
+    },
+    STOCK: {
+        FIELDS_REQUIRED: "productId, storeId, and quantity are required",
+        ALREADY_EXISTS: "Stock already initialized for this product and store",
+        NOT_FOUND: "Stock record not found",
+        QUANTITY_NON_NEGATIVE: "Initial quantity must be zero or greater",
+        INVALID_THRESHOLD: "Threshold must be a non-negative number",
+        DELTA_NON_ZERO: "Adjustment delta must be a non-zero integer",
+        WOULD_GO_NEGATIVE: "Adjustment would drive stock below zero",
+        TRANSFER_FIELDS_REQUIRED: "productId, fromStoreId, toStoreId, and quantity are required",
+        SAME_STORE: "Source and destination stores cannot be the same",
+        QUANTITY_POSITIVE: "Transfer quantity must be greater than zero",
+        INSUFFICIENT_STOCK: "Insufficient stock at source store",
+        SOURCE_STORE_NOT_FOUND: "Source store not found",
+        DEST_STORE_NOT_FOUND: "Destination store not found",
+        CREATED: "Stock initialized successfully",
+        FETCHED: "Stock fetched successfully",
+        ADJUSTED: "Stock adjusted successfully",
+        TRANSFERRED: "Stock transferred successfully",
+    },
 };
+
