@@ -1,6 +1,6 @@
-import Product from "../models/Product.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 import { MESSAGES } from "../constants/messages.js";
+import * as productService from "../services/productService.js";
 
 const createProduct = async (req, res) => {
     try {
@@ -13,16 +13,7 @@ const createProduct = async (req, res) => {
             });
         }
 
-        const existing = await Product.findOne({ sku: sku.toUpperCase() });
-
-        if (existing) {
-            return res.status(HTTP_STATUS.CONFLICT).json({
-                success: false,
-                message: MESSAGES.PRODUCT.SKU_EXISTS,
-            });
-        }
-
-        const product = await Product.create({ name, sku });
+        const product = await productService.createProduct({ name, sku });
 
         res.status(HTTP_STATUS.CREATED).json({
             success: true,
@@ -30,17 +21,14 @@ const createProduct = async (req, res) => {
             data: product,
         });
     } catch (error) {
-        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-            success: false,
-            message: error.message,
-        });
+        const status = error.status || HTTP_STATUS.INTERNAL_SERVER_ERROR;
+        res.status(status).json({ success: false, message: error.message });
     }
 };
 
 const getProducts = async (req, res) => {
     try {
-        const products = await Product.find().sort({ createdAt: -1 });
-
+        const products = await productService.getProducts();
         res.status(HTTP_STATUS.OK).json({
             success: true,
             message: MESSAGES.PRODUCT.FETCHED,

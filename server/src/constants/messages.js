@@ -44,6 +44,7 @@ export const MESSAGES = {
         FETCHED: "Stock fetched successfully",
         ADJUSTED: "Stock adjusted successfully",
         TRANSFERRED: "Stock transferred successfully",
+        SUMMARY_FETCHED: "Summary fetched successfully",
     },
 };
 
