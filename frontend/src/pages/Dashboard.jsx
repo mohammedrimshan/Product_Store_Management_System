@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { clearCredentials } from "../store/authSlice";
 import { logoutUser } from "../api/authService";
@@ -12,13 +12,18 @@ import "../styles/dashboard.css";
 import "../styles/pages.css";
 
 const NAV_ITEMS = ["Dashboard", "Products", "Stores", "Stock"];
+const VALID_PAGES = new Set(NAV_ITEMS);
 
 function Dashboard() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { user } = useSelector((state) => state.auth);
 
-    const [activePage, setActivePage] = useState("Dashboard");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const rawPage = searchParams.get("page");
+    const activePage = VALID_PAGES.has(rawPage) ? rawPage : "Dashboard";
+
+    const setPage = (page) => setSearchParams(page === "Dashboard" ? {} : { page });
     const [summary, setSummary] = useState({
         totalProducts: 0,
         totalStores: 0,
@@ -62,7 +67,7 @@ function Dashboard() {
                         <div
                             key={item}
                             className={`nav-item ${activePage === item ? "active" : ""}`}
-                            onClick={() => setActivePage(item)}
+                            onClick={() => setPage(item)}
                         >
                             {item}
                         </div>
@@ -102,9 +107,9 @@ function Dashboard() {
                                     className={`stat-card ${stat.className || ""}`}
                                     style={{ cursor: "pointer" }}
                                     onClick={() => {
-                                        if (stat.label === "Total Products") setActivePage("Products");
-                                        else if (stat.label === "Total Stores") setActivePage("Stores");
-                                        else setActivePage("Stock");
+                                        if (stat.label === "Total Products") setPage("Products");
+                                        else if (stat.label === "Total Stores") setPage("Stores");
+                                        else setPage("Stock");
                                     }}
                                 >
                                     <span className="stat-label">{stat.label}</span>
