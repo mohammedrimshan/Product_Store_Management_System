@@ -58,7 +58,6 @@ function ProductsPage() {
                 <h2>Products</h2>
             </div>
 
-            {/* Admin-only: create form */}
             {isAdmin && (
                 <div className="card">
                     <p style={{ fontWeight: 600, marginBottom: 14, fontSize: 14 }}>Add New Product</p>
@@ -95,7 +94,6 @@ function ProductsPage() {
                 </div>
             )}
 
-            {/* Product list */}
             {loading ? (
                 <div className="spinner">Loading products…</div>
             ) : products.length === 0 ? (

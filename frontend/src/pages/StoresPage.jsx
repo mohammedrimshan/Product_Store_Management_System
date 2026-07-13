@@ -58,7 +58,6 @@ function StoresPage() {
                 <h2>Stores</h2>
             </div>
 
-            {/* Admin-only: create form */}
             {isAdmin && (
                 <div className="card">
                     <p style={{ fontWeight: 600, marginBottom: 14, fontSize: 14 }}>Add New Store</p>
@@ -95,7 +94,6 @@ function StoresPage() {
                 </div>
             )}
 
-            {/* Store list */}
             {loading ? (
                 <div className="spinner">Loading stores…</div>
             ) : stores.length === 0 ? (
